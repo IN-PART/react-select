@@ -235,7 +235,16 @@ var Async = (function (_Component) {
 				},
 				onChange: function onChange(newValues) {
 					if (_this3.props.value && newValues.length > _this3.props.value.length) {
-						_this3.clearOptions();
+						(function () {
+							var newValueValues = newValues.map(function (newValue) {
+								return newValue[_this3.props.valueKey];
+							});
+							_this3.setState({
+								options: _this3.state.options.filter(function (opt) {
+									return newValueValues.indexOf(opt[_this3.props.valueKey]) == -1;
+								})
+							});
+						})();
 					}
 					_this3.props.onChange(newValues);
 				}
