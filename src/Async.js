@@ -187,7 +187,12 @@ export default class Async extends Component {
 			ref: (ref) => (this.select = ref),
 			onChange: (newValues) => {
 				if (this.props.value && (newValues.length > this.props.value.length)) {
-					this.clearOptions();
+					const newValueValues = newValues.map(newValue => newValue[this.props.valueKey]);
+					this.setState({
+						options: this.state.options.filter(opt =>
+							newValueValues.indexOf(opt[this.props.valueKey]) == -1
+						)
+					});
 				}
 				this.props.onChange(newValues);
 			}
